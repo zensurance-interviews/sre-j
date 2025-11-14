@@ -22,19 +22,5 @@
 		"ghcr.io/devcontainers/features/aws-cli:1.1.2": {}
 
 	},
-	
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "kubectl version",
-
-	// Use 'postStartCommand' to run commands after the container is created like starting minikube.
 	"postStartCommand": "aws eks update-kubeconfig --region us-east-1 --name zen-eks-dev --alias sre"
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
 }
