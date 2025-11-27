@@ -63,8 +63,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: sre-interview:${{ github.sha }}
+          tags: main
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          registry: ${{ steps.login-ecr.outputs.registry }}/sre-interview:main
+          registry: ${{ steps.login-ecr.outputs.registry }}/sre-interview
 
