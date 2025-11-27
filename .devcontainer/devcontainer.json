@@ -19,7 +19,8 @@
 			"helm": "latest",
 			"minikube": "latest"
 		},
-		"ghcr.io/devcontainers/features/aws-cli:1.1.2": {}
+		"ghcr.io/devcontainers/features/aws-cli:1.1.2": {},
+		"ghcr.io/devcontainers/features/terraform:1": {}
 
 	},
 	"postStartCommand": "aws eks update-kubeconfig --region us-east-1 --name zen-eks-dev --alias sre"
