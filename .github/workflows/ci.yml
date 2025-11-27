@@ -10,7 +10,6 @@ permissions:
   actions: read
   contents: read
   id-token: write   # This is required for requesting the JWT
-  contents: read    # This is required for actions/checkout
 jobs:
   main:
     runs-on: ubuntu-latest
