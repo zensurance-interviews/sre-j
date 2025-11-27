@@ -1,7 +1,3 @@
-output "namespace" {
-  description = "The namespace where nginx is deployed"
-  value       = kubernetes_namespace.nginx.metadata[0].name
-}
 
 output "deployment_name" {
   description = "Name of the nginx deployment"
@@ -53,14 +49,14 @@ output "hpa_enabled" {
   value       = var.hpa_enabled
 }
 
-output "kubectl_commands" {
-  description = "Useful kubectl commands"
-  value = {
-    get_pods     = "kubectl get pods -n ${kubernetes_namespace.nginx.metadata[0].name}"
-    get_service  = "kubectl get service -n ${kubernetes_namespace.nginx.metadata[0].name}"
-    get_ingress  = "kubectl get ingress -n ${kubernetes_namespace.nginx.metadata[0].name}"
-    describe_pod = "kubectl describe pod -l app=nginx -n ${kubernetes_namespace.nginx.metadata[0].name}"
-    logs         = "kubectl logs -l app=nginx -n ${kubernetes_namespace.nginx.metadata[0].name}"
-    port_forward = "kubectl port-forward -n ${kubernetes_namespace.nginx.metadata[0].name} svc/${kubernetes_service.nginx.metadata[0].name} 8080:80"
-  }
-}
+# output "kubectl_commands" {
+#   description = "Useful kubectl commands"
+#   value = {
+#     get_pods     = "kubectl get pods -n ${kubernetes_namespace.nginx.metadata[0].name}"
+#     get_service  = "kubectl get service -n ${kubernetes_namespace.nginx.metadata[0].name}"
+#     get_ingress  = "kubectl get ingress -n ${kubernetes_namespace.nginx.metadata[0].name}"
+#     describe_pod = "kubectl describe pod -l app=nginx -n ${kubernetes_namespace.nginx.metadata[0].name}"
+#     logs         = "kubectl logs -l app=nginx -n ${kubernetes_namespace.nginx.metadata[0].name}"
+#     port_forward = "kubectl port-forward -n ${kubernetes_namespace.nginx.metadata[0].name} svc/${kubernetes_service.nginx.metadata[0].name} 8080:80"
+#   }
+# }

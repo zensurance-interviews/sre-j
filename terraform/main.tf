@@ -15,7 +15,7 @@ provider "kubernetes" {
 }
 
 locals {
-    namespace = "sre-interview
+    namespace = "sre-interview"
 }
 
 # Deployment for nginx
@@ -118,7 +118,6 @@ resource "kubernetes_deployment" "nginx" {
     }
   }
 
-  depends_on = [kubernetes_namespace.nginx]
 }
 
 # Service for nginx
@@ -172,7 +171,6 @@ resource "kubernetes_config_map" "nginx_config" {
     "nginx.conf" = var.custom_nginx_config
   }
 
-  depends_on = [kubernetes_namespace.nginx]
 }
 
 # Optional: Ingress for external access
