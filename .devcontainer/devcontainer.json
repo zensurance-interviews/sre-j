@@ -23,5 +23,12 @@
 		"ghcr.io/devcontainers/features/terraform:1": {}
 
 	},
-	"postStartCommand": "aws eks update-kubeconfig --region us-east-1 --name zen-eks-dev --alias sre"
+	"postStartCommand": "aws eks update-kubeconfig --region us-east-1 --name zen-eks-dev --alias sre",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"MS-vsliveshare.vsliveshare"
+			]
+		}
+	}
 }
