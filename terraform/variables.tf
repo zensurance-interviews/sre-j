@@ -31,12 +31,6 @@ variable "deployment_name" {
   default     = "nginx"
 }
 
-variable "nginx_version" {
-  description = "Version of nginx Docker image to use"
-  type        = string
-  default     = "1.25-alpine"
-}
-
 variable "replicas" {
   description = "Number of nginx replicas"
   type        = number
@@ -64,13 +58,13 @@ variable "cpu_limit" {
 variable "memory_request" {
   description = "Memory request for nginx container"
   type        = string
-  default     = "128Mi"
+  default     = "256Mi"
 }
 
 variable "memory_limit" {
   description = "Memory limit for nginx container"
   type        = string
-  default     = "256Mi"
+  default     = "512Mi"
 }
 
 # Service

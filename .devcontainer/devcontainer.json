@@ -1,14 +1,7 @@
 {
 	"name": "Kubernetes - Minikube-in-Docker",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
-	"containerEnv": {
-		"AWS_REGION": "us-east-1"
-	},
-	"remoteEnv": {
-		"AWS_REGION": "us-east-1"
-	},
-	
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {
 			"enableNonRootDocker": "true",
@@ -19,16 +12,13 @@
 			"helm": "latest",
 			"minikube": "latest"
 		},
-		"ghcr.io/devcontainers/features/aws-cli:1.1.2": {},
+		// "ghcr.io/devcontainers/features/aws-cli:1.1.2": {},
 		"ghcr.io/devcontainers/features/terraform:1": {}
-
 	},
-	"postStartCommand": "aws eks update-kubeconfig --region us-east-1 --name zen-eks-dev --alias sre",
+	"postStartCommand": "./devcontainer-setup-script.sh",
 	"customizations": {
 		"vscode": {
-			"extensions": [
-				"MS-vsliveshare.vsliveshare"
-			]
+			"extensions": []
 		}
 	}
 }

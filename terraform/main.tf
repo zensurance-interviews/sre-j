@@ -1,6 +1,6 @@
 terraform {
   required_version = ">= 1.0"
-  
+
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -15,7 +15,19 @@ provider "kubernetes" {
 }
 
 locals {
-    namespace = "sre-interview"
+  namespace = "default"
+}
+
+# Namespace
+resource "kubernetes_namespace" "sre_interview" {
+  metadata {
+    name = local.namespace
+
+    labels = {
+      environment = var.environment
+      managed_by  = "terraform"
+    }
+  }
 }
 
 # Deployment for nginx
@@ -23,7 +35,6 @@ resource "kubernetes_deployment" "nginx" {
   metadata {
     name      = var.deployment_name
     namespace = local.namespace
-    
     labels = {
       app         = "nginx"
       environment = var.environment
@@ -51,11 +62,11 @@ resource "kubernetes_deployment" "nginx" {
       spec {
         container {
           name  = "nginx"
-          image = "nginx:${var.nginx_version}"
+          image = "localhost:5000/zen-svc"
 
           port {
             name           = "http"
-            container_port = 80
+            container_port = 3000
             protocol       = "TCP"
           }
 
@@ -73,7 +84,7 @@ resource "kubernetes_deployment" "nginx" {
           liveness_probe {
             http_get {
               path = "/"
-              port = 80
+              port = 3000
             }
             initial_delay_seconds = 30
             period_seconds        = 10
@@ -118,6 +129,7 @@ resource "kubernetes_deployment" "nginx" {
     }
   }
 
+  depends_on = [kubernetes_namespace.sre_interview]
 }
 
 # Service for nginx
@@ -125,7 +137,7 @@ resource "kubernetes_service" "nginx" {
   metadata {
     name      = var.service_name
     namespace = local.namespace
-    
+
     labels = {
       app         = "nginx"
       environment = var.environment
@@ -149,7 +161,7 @@ resource "kubernetes_service" "nginx" {
     }
   }
 
-  depends_on = [kubernetes_deployment.nginx]
+  depends_on = [kubernetes_deployment.nginx, kubernetes_namespace.sre_interview]
 }
 
 # Optional: ConfigMap for custom nginx configuration
@@ -159,7 +171,7 @@ resource "kubernetes_config_map" "nginx_config" {
   metadata {
     name      = "${var.deployment_name}-config"
     namespace = local.namespace
-    
+
     labels = {
       app         = "nginx"
       environment = var.environment
@@ -180,9 +192,9 @@ resource "kubernetes_ingress_v1" "nginx" {
   metadata {
     name      = "${var.deployment_name}-ingress"
     namespace = local.namespace
-    
+
     annotations = var.ingress_annotations
-    
+
     labels = {
       app         = "nginx"
       environment = var.environment
@@ -232,7 +244,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "nginx" {
   metadata {
     name      = "${var.deployment_name}-hpa"
     namespace = local.namespace
-    
+
     labels = {
       app         = "nginx"
       environment = var.environment
