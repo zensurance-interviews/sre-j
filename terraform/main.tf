@@ -18,18 +18,6 @@ locals {
   namespace = "default"
 }
 
-# Namespace
-resource "kubernetes_namespace" "sre_interview" {
-  metadata {
-    name = local.namespace
-
-    labels = {
-      environment = var.environment
-      managed_by  = "terraform"
-    }
-  }
-}
-
 # Deployment for nginx
 resource "kubernetes_deployment" "nginx" {
   metadata {
@@ -62,7 +50,7 @@ resource "kubernetes_deployment" "nginx" {
       spec {
         container {
           name  = "nginx"
-          image = "localhost:5000/zen-svc"
+          image = "localhost:5000/zen-svc:latest"
 
           port {
             name           = "http"
@@ -83,10 +71,10 @@ resource "kubernetes_deployment" "nginx" {
 
           liveness_probe {
             http_get {
-              path = "/"
+              path = "/api"
               port = 3000
             }
-            initial_delay_seconds = 30
+            initial_delay_seconds = 10
             period_seconds        = 10
             timeout_seconds       = 5
             failure_threshold     = 3
@@ -94,8 +82,8 @@ resource "kubernetes_deployment" "nginx" {
 
           readiness_probe {
             http_get {
-              path = "/"
-              port = 80
+              path = "/api"
+              port = 3000
             }
             initial_delay_seconds = 10
             period_seconds        = 5
@@ -128,8 +116,6 @@ resource "kubernetes_deployment" "nginx" {
       }
     }
   }
-
-  depends_on = [kubernetes_namespace.sre_interview]
 }
 
 # Service for nginx
@@ -161,7 +147,7 @@ resource "kubernetes_service" "nginx" {
     }
   }
 
-  depends_on = [kubernetes_deployment.nginx, kubernetes_namespace.sre_interview]
+  depends_on = [kubernetes_deployment.nginx]
 }
 
 # Optional: ConfigMap for custom nginx configuration

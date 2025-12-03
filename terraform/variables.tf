@@ -34,8 +34,8 @@ variable "deployment_name" {
 variable "replicas" {
   description = "Number of nginx replicas"
   type        = number
-  default     = 2
-  
+  default     = 1
+
   validation {
     condition     = var.replicas > 0
     error_message = "Replicas must be greater than 0"
@@ -64,7 +64,7 @@ variable "memory_request" {
 variable "memory_limit" {
   description = "Memory limit for nginx container"
   type        = string
-  default     = "512Mi"
+  default     = "256Mi"
 }
 
 # Service
@@ -78,7 +78,7 @@ variable "service_type" {
   description = "Type of Kubernetes service (ClusterIP, NodePort, LoadBalancer)"
   type        = string
   default     = "ClusterIP"
-  
+
   validation {
     condition     = contains(["ClusterIP", "NodePort", "LoadBalancer"], var.service_type)
     error_message = "Service type must be ClusterIP, NodePort, or LoadBalancer"
@@ -95,7 +95,7 @@ variable "node_port" {
   description = "NodePort for service (only used if service_type is NodePort)"
   type        = number
   default     = 30080
-  
+
   validation {
     condition     = var.node_port >= 30000 && var.node_port <= 32767
     error_message = "NodePort must be between 30000 and 32767"
