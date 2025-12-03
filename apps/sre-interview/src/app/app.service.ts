@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppService {
   private responseCache: any[] = [];
-  private readonly MAX_CACHE_SIZE = 300 * 1024 * 1024; // 2000MB cache limit
+  private readonly MAX_CACHE_SIZE = 300 * 1024 * 1024; // 300MB cache limit
   private readonly CACHE_ENTRY_SIZE = 1024 * 1024; // 1MB per entry
 
   constructor() {
@@ -22,7 +22,7 @@ export class AppService {
         );
         this.responseCache.push(cacheEntry);
       }
-    }, 100); // Cache warmup interval
+    }, 200); // Cache warmup interval
   }
 
   getData(): { message: string } {

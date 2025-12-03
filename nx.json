@@ -16,6 +16,8 @@
         "watchDepsTargetName": "watch-deps",
         "serveStaticTargetName": "serve-static"
       }
+
     }
-  ]
+  ],
+      "neverConnectToCloud": true
 }
