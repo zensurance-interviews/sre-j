@@ -1,27 +1,27 @@
 {
-	"name": "Kubernetes - Minikube-in-Docker",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye",
-	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-			"enableNonRootDocker": "true",
-			"moby": "true"
-		},
-		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-			"version": "latest",
-			"helm": "none",
-			"minikube": "latest"
-		},
-		// "ghcr.io/devcontainers/features/aws-cli:1.1.2": {},
-		"ghcr.io/devcontainers/features/terraform:1": {
-			"tflint": "",
-			"terragrunt": ""
-		}
-	},
-	"postStartCommand": "./devcontainer-setup-script.sh",
-	"customizations": {
-		"vscode": {
-			"extensions": []
-		}
-	}
+  "name": "Kubernetes - Minikube-in-Docker",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "enableNonRootDocker": "true",
+      "moby": "true"
+    },
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+      "version": "latest",
+      "helm": "none",
+      "minikube": "latest"
+    },
+    // "ghcr.io/devcontainers/features/aws-cli:1.1.2": {},
+    "ghcr.io/devcontainers/features/terraform:1": {
+      "tflint": "",
+      "terragrunt": ""
+    }
+  },
+  "postStartCommand": "./devcontainer-setup-script.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  }
 }

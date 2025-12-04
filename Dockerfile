@@ -1,9 +1,7 @@
-# Build stage
-FROM node:20-alpine AS builder
+FROM mcr.microsoft.com/devcontainers/javascript-node:22-bullseye
 
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
 # Install all dependencies (including dev dependencies for build)
@@ -12,19 +10,8 @@ RUN npm ci
 # Copy source code and configuration
 COPY . .
 
-# Build the application
-RUN npx nx build sre-interview --prod
-
-# Production stage
-FROM node:20-alpine
-
-WORKDIR /app
-
 # Copy built application from builder stage
 COPY --from=builder /app/dist/apps/sre-interview ./
-
-# Install production dependencies only
-RUN npm ci --omit=dev
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
